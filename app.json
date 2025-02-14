@@ -15,7 +15,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.damprofesor.NFCtest"
     },
     "web": {
       "bundler": "metro",
@@ -24,6 +25,7 @@
     },
     "plugins": [
       "expo-router",
+      ["react-native-nfc-manager"],
       [
         "expo-splash-screen",
         {
