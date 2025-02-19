@@ -30,7 +30,7 @@ const list = () => {
 
       </View>
       <TouchableOpacity>
-        <Link href={"/_sitemap"} style={{color: '#f9f9f9'}}>Moverse entre páginas</Link>
+        <Link href={"/"} style={{color: '#f9f9f9'}}>Moverse entre páginas</Link>
       </TouchableOpacity>
     </View>
   )

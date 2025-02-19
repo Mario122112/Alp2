@@ -14,7 +14,7 @@ const mal = () => {
       <View style={styles.container}>
         <Text style={styles.title}>ERROR DE VALIDACIÓN</Text>
         
-        <Link href="/_sitemap">
+        <Link href="/">
         <Image
           source={require('../assets/images/cross.png')}
           style={styles.image}

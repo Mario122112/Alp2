@@ -12,12 +12,14 @@ export default function Index() {
       await NfcManager.requestTechnology(NfcTech.Ndef);
       const data = await NfcManager.getTag();
       setTag(JSON.stringify(data, null, 2));
+      console.log(JSON.stringify(data, null, 2))
 
     }catch (ex) {
       console.warn("ERROR", ex)
     } finally {
       NfcManager.cancelTechnologyRequest();
     }
+
 
   }
 
@@ -29,9 +31,12 @@ export default function Index() {
         <Text style={estilos.texto}>Autentifiquese</Text>
       </View>
       
-      <View style={estilos.cajaBlanca}>
-        <Text style={estilos.textoCaja}>Acerque su tarjeta de estudiante al lector NFC</Text>
-      </View>
+      <TouchableOpacity onPress={readNFT}>
+        <View style={estilos.cajaBlanca}>
+          <Text style={estilos.textoCaja}>Acerque su tarjeta de estudiante al lector NFC</Text>
+        </View>
+      </TouchableOpacity>
+
       
       <TouchableOpacity>
         <Link href={"/auth_bien"} style={[{ color: '#2BD31B' }, { fontSize: 24 }]}>SALIDA CORRECTA</Link>
