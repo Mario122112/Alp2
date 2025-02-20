@@ -1,11 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import NfcManager, { NfcTech } from 'react-native-nfc-manager';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack'; // Necesario para tipar la navegación
 
-export default function Index() {
-  const [mensaje, setMensaje] = useState('');
+// Importa el tipo de rutas
+type RootStackParamList = {
+  Home: undefined;
+  AuthBien: undefined;
+  AuthMal: undefined;
+};
 
-  // ID específica que deseas verificar
+const Index: React.FC = () => {
+  const [mensaje, setMensaje] = useState<string>('');
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>(); // Tipamos la navegación
+
   const idEspecifica = 'BB3EC95F';
 
   const readNFT = async () => {
@@ -14,19 +23,22 @@ export default function Index() {
       const data = await NfcManager.getTag();
       console.log('Datos de la etiqueta NFC:', data);
 
-      // Asegúrate de que 'data.id' existe y es una cadena
       if (data && typeof data.id === 'string') {
         if (data.id === idEspecifica) {
           setMensaje('Autenticación exitosa');
+          navigation.navigate('AuthBien');  // Navegar a la pantalla de autenticación exitosa
         } else {
           setMensaje('ID no reconocida');
+          navigation.navigate('AuthMal');  // Navegar a la pantalla de autenticación fallida
         }
       } else {
         setMensaje('No se pudo leer la ID de la etiqueta');
+        navigation.navigate('AuthMal');  // Navegar a la pantalla de autenticación fallida
       }
     } catch (ex) {
       console.warn('ERROR', ex);
       setMensaje('Error al leer la etiqueta NFC');
+      navigation.navigate('AuthMal');  // Navegar a la pantalla de autenticación fallida
     } finally {
       NfcManager.cancelTechnologyRequest();
     }
@@ -55,7 +67,7 @@ export default function Index() {
       <Image source={require('../assets/images/lector.png')} style={estilos.lector} />
     </View>
   );
-}
+};
 
 const estilos = StyleSheet.create({
   contenedor: {
@@ -120,3 +132,5 @@ const estilos = StyleSheet.create({
     width: 250,
   },
 });
+
+export default Index;
