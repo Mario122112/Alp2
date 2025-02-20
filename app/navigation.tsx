@@ -4,25 +4,30 @@ import { NavigationContainer } from '@react-navigation/native';
 import Index from './index';  // Tu archivo principal
 import AuthBien from './auth_bien';  // Pantalla de autenticación exitosa
 import AuthMal from './auth_mal';  // Pantalla de autenticación fallida
+import Listado from './listado';
 
 type RootStackParamList = {
-  Home: undefined;
+  Index: undefined;
   AuthBien: undefined;
   AuthMal: undefined;
+  Listado: undefined;
+  Inicio: undefined;  // Asegúrate de que "Inicio" esté correctamente tipado
 };
 
-const Stack = createStackNavigator<RootStackParamList>();
+const Stack = createStackNavigator();
 
-const Navigation: React.FC = () => {
+const App = () => {
+
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={Index} />
-        <Stack.Screen name="AuthBien" component={AuthBien} />
-        <Stack.Screen name="AuthMal" component={AuthMal} />
+      <Stack.Navigator initialRouteName="Index">
+        <Stack.Screen name="Index" component={Index} />
+        <Stack.Screen name="auth_bien" component={AuthBien} />
+        <Stack.Screen name="auth_mal" component={AuthMal} />
+        <Stack.Screen name="listado" component={Listado} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
 
-export default Navigation;
+export default App;
