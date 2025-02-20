@@ -1,73 +1,63 @@
-  import { Text, View,StyleSheet, Pressable,TouchableOpacity,Image } from "react-native";
-import { useEffect, useState} from "react";
-import NfcManager, { NfcTech } from "react-native-nfc-manager";
-import {Link} from "expo-router";
-
+import React, { useEffect, useState } from 'react';
+import { Text, View, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import NfcManager, { NfcTech } from 'react-native-nfc-manager';
 
 export default function Index() {
-  const [tag, setTag] = useState("");
+  const [mensaje, setMensaje] = useState('');
+
+  // ID específica que deseas verificar
+  const idEspecifica = 'BB3EC95F';
 
   const readNFT = async () => {
     try {
       await NfcManager.requestTechnology(NfcTech.Ndef);
       const data = await NfcManager.getTag();
-      setTag(JSON.stringify(data, null, 2));
-      console.log(JSON.stringify(data, null, 2))
+      console.log('Datos de la etiqueta NFC:', data);
 
-    }catch (ex) {
-      console.warn("ERROR", ex)
+      // Asegúrate de que 'data.id' existe y es una cadena
+      if (data && typeof data.id === 'string') {
+        if (data.id === idEspecifica) {
+          setMensaje('Autenticación exitosa');
+        } else {
+          setMensaje('ID no reconocida');
+        }
+      } else {
+        setMensaje('No se pudo leer la ID de la etiqueta');
+      }
+    } catch (ex) {
+      console.warn('ERROR', ex);
+      setMensaje('Error al leer la etiqueta NFC');
     } finally {
       NfcManager.cancelTechnologyRequest();
     }
-
-
-  }
+  };
 
   return (
     <View style={estilos.contenedor}>
-      <Image source={require("../assets/images/fondo.png")} style={estilos.fondo} />
+      <Image source={require('../assets/images/fondo.png')} style={estilos.fondo} />
 
       <View style={estilos.textoContainer}>
         <Text style={estilos.texto}>Autentifiquese</Text>
       </View>
-      
+
       <TouchableOpacity onPress={readNFT}>
         <View style={estilos.cajaBlanca}>
           <Text style={estilos.textoCaja}>Acerque su tarjeta de estudiante al lector NFC</Text>
         </View>
       </TouchableOpacity>
 
-      
-      <TouchableOpacity>
-        <Link href={"/auth_bien"} style={[{ color: '#2BD31B' }, { fontSize: 24 }]}>SALIDA CORRECTA</Link>
-      </TouchableOpacity>
-      <TouchableOpacity>
-        <Link href={"/auth_mal"} style={[{ color: '#BF1313' }, { fontSize: 24 }]}>SALIDA INCORRECTA</Link>
-      </TouchableOpacity>
-      <Image source={require("../assets/images/lector.png")} style={estilos.lector} />
+      {mensaje ? (
+        <View style={estilos.mensajeContainer}>
+          <Text style={estilos.mensajeTexto}>{mensaje}</Text>
+        </View>
+      ) : null}
+
+      <Image source={require('../assets/images/lector.png')} style={estilos.lector} />
     </View>
   );
 }
-  
 
 const estilos = StyleSheet.create({
-  contenedorCentro: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  btn: {
-    justifyContent: "center",
-    alignItems: "center",
-    width: 200,
-    height: 50,
-    backgroundColor:"indigo",
-    marginVertical:10
-  },
-  btnText: {
-    color: 'white',
-    fontSize: 16,
-  },
   contenedor: {
     flex: 1,
     justifyContent: 'center',
@@ -79,8 +69,8 @@ const estilos = StyleSheet.create({
     height: '100%',
   },
   textoContainer: {
-    zIndex: 1, 
-    marginBottom:20,
+    zIndex: 1,
+    marginBottom: 20,
   },
   texto: {
     color: 'white',
@@ -88,7 +78,7 @@ const estilos = StyleSheet.create({
     fontWeight: 'bold',
     textShadowColor: 'black',
     textShadowRadius: 1,
-    textShadowOffset: { 
+    textShadowOffset: {
       width: 2,
       height: 2,
     },
@@ -96,25 +86,37 @@ const estilos = StyleSheet.create({
   cajaBlanca: {
     zIndex: 1,
     backgroundColor: '#F9F9F9',
-    width: '55%', 
-    height: '35%', 
-    borderRadius:20,
-    borderWidth:4,
+    width: '55%',
+    height: '35%',
+    borderRadius: 20,
+    borderWidth: 4,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom:90,
+    marginBottom: 90,
   },
-  textoCaja:{
+  textoCaja: {
     fontSize: 40,
     fontWeight: 'bold',
-    padding:15,
-    textAlign:'center',
+    padding: 15,
+    textAlign: 'center',
   },
-  lector:{
-    position: 'absolute', 
-    bottom: -20,            
-    left: 40,               
-    height: 150,      
-    width: 250,            
+  mensajeContainer: {
+    zIndex: 1,
+    backgroundColor: '#F9F9F9',
+    width: '80%',
+    padding: 10,
+    borderRadius: 10,
+    marginBottom: 20,
+  },
+  mensajeTexto: {
+    fontSize: 16,
+    textAlign: 'center',
+  },
+  lector: {
+    position: 'absolute',
+    bottom: -20,
+    left: 40,
+    height: 150,
+    width: 250,
   },
 });
