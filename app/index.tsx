@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import NfcManager, { NfcTech } from 'react-native-nfc-manager';
 import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack'; // Necesario para tipar la navegación
+import { StackNavigationProp } from '@react-navigation/stack'; // Necesario para la navegación
 import { db } from '../FireBaseconfig'; // Importar tu configuración de Firebase
 import { collection, getDocs } from 'firebase/firestore'; // Importar las funciones de Firestore
 
@@ -29,12 +29,12 @@ const Index: React.FC = () => {
         const idLeido = data.id;
 
         // Consultar Firestore para obtener los datos de la colección
-        const querySnapshot = await getDocs(collection(db, 'ALP')); // Cambia 'usuarios' al nombre de tu colección
+        const querySnapshot = await getDocs(collection(db, 'ALP')); 
         let idValido = false;
 
         querySnapshot.forEach((doc) => {
           const docData = doc.data();
-          const idFirestore = docData.ID; // Asegúrate de que el campo que contiene el ID sea 'id'
+          const idFirestore = docData.ID; 
 
           if (idLeido === idFirestore) {
             idValido = true;

@@ -1,7 +1,7 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { Link } from "expo-router";
 import React, { useEffect, useState } from 'react';
-import { db } from '../FireBaseconfig'; // Importar tu configuración de Firebase
+import { db } from '../FireBaseconfig'; 
 import { collection, getDocs } from 'firebase/firestore';
 
 const List: React.FC = () => {

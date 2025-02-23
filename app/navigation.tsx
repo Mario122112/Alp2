@@ -1,9 +1,9 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
-import Index from './index';  // Tu archivo principal
-import AuthBien from './auth_bien';  // Pantalla de autenticación exitosa
-import AuthMal from './auth_mal';  // Pantalla de autenticación fallida
+import Index from './index';  
+import AuthBien from './auth_bien'; 
+import AuthMal from './auth_mal'; 
 import Listado from './listado';
 
 type RootStackParamList = {
@@ -11,7 +11,7 @@ type RootStackParamList = {
   AuthBien: undefined;
   AuthMal: undefined;
   Listado: undefined;
-  Inicio: undefined;  // Asegúrate de que "Inicio" esté correctamente tipado
+  Inicio: undefined;  
 };
 
 const Stack = createStackNavigator();
