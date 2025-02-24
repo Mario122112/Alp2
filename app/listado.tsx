@@ -66,7 +66,7 @@ const List: React.FC = () => {
       </View>
 
       <TouchableOpacity>
-        <Link href={"/"} style={{ color: '#f9f9f9' }}>Moverse entre páginas</Link>
+        <Link href={"/"} style={{ color: '#f9f9f9' }}>Volver</Link>
       </TouchableOpacity>
     </View>
   );
